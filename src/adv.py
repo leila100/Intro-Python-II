@@ -38,9 +38,24 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
+
+def getValidMoves(room):
+    valid_moves = []
+    if room.n_to:
+        valid_moves.append('[n - to move North]')
+    if room.s_to:
+        valid_moves.append('[s - to move South]')
+    if room.e_to:
+        valid_moves.append('[e - to move East]')
+    if room.w_to:
+        valid_moves.append('[w - to move West]')
+    return valid_moves
+
+
 # Make a new player object that is currently in the 'outside' room.
 player1 = Player("player1", room['outside'])
 print(player1)
+print(player1.current_position)
 
 # Write a loop that:
 #
@@ -52,3 +67,38 @@ print(player1)
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+error_message = 'You can not go that way. Please enter a valid move.'
+while True:
+    valid_moves = getValidMoves(player1.current_position)
+    valid_moves_str = ""
+    for move in valid_moves:
+        valid_moves_str += move + " "
+    move = input("Please enter one of these moves: " +
+                 valid_moves_str + ". Enter q to quit.\n")
+    if move == 'n':
+        if player1.current_position.n_to:
+            player1.current_position = player1.current_position.n_to
+        else:
+            print(error_message)
+    elif move == 's':
+        if player1.current_position.s_to:
+            player1.current_position = player1.current_position.s_to
+        else:
+            print(error_message)
+    elif move == 'e':
+        if player1.current_position.e_to:
+            player1.current_position = player1.current_position.e_to
+        else:
+            print(error_message)
+    elif move == 'w':
+        if player1.current_position.w_to:
+            player1.current_position = player1.current_position.w_to
+        else:
+            print(error_message)
+    elif move == 'q':
+        print("Thank you for playing!")
+        break
+    else:
+        print("Please enter on of the valid options, or q to quit")
+    print(player1)
+    print(player1.current_position)

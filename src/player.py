@@ -8,4 +8,4 @@ class Player:
         self.current_position = current_position
 
     def __str__(self):
-        return f"{self.name} is in room {self.current_position.name}"
+        return f"******* {self.name} is currently in room {self.current_position.name}"

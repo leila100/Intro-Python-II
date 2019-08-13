@@ -1,5 +1,6 @@
 # Implement a class to hold room information. This should have name and
 # description attributes.
+import textwrap
 
 
 class Room:
@@ -10,3 +11,11 @@ class Room:
         self.s_to = s_to
         self.e_to = e_to
         self.w_to = w_to
+
+    def __str__(self):
+        wrapper = textwrap.TextWrapper(width=50)
+        word_list = wrapper.wrap(text=self.description)
+        description = "******* "
+        for line in word_list:
+            description += line
+        return description
