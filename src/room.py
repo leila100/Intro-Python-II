@@ -15,7 +15,7 @@ class Room:
     def __str__(self):
         wrapper = textwrap.TextWrapper(width=50)
         word_list = wrapper.wrap(text=self.description)
-        description = "******* "
+        description = ""
         for line in word_list:
-            description += line
+            description += line + '\n'
         return description

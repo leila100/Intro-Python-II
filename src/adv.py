@@ -67,13 +67,13 @@ print(player1.current_position)
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-error_message = 'You can not go that way. Please enter a valid move.'
+error_message = 'xxxxxxx You can not go that way. Please enter a valid move. xxxxxxx'
 while True:
     valid_moves = getValidMoves(player1.current_position)
     valid_moves_str = ""
     for move in valid_moves:
         valid_moves_str += move + " "
-    move = input("Please enter one of these moves: " +
+    move = input("Please enter one of these moves:\n " +
                  valid_moves_str + ". Enter q to quit.\n")
     if move == 'n':
         if player1.current_position.n_to:
@@ -96,9 +96,9 @@ while True:
         else:
             print(error_message)
     elif move == 'q':
-        print("Thank you for playing!")
+        print("--------- Thank you for playing! ---------")
         break
     else:
-        print("Please enter on of the valid options, or q to quit")
+        print("xxxxxxx Please enter one of the valid options, or q to quit xxxxxxx")
     print(player1)
     print(player1.current_position)
