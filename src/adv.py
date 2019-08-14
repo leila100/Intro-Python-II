@@ -92,38 +92,63 @@ while True:
     valid_moves_str = ""
     for move in valid_moves:
         valid_moves_str += move + " "
-    move = input("Please enter one of these moves:\n " +
-                 valid_moves_str + ". Enter q to quit.\n")
-    if move == 'n':
-        if player1.current_position.n_to:
-            player1.current_position = player1.current_position.n_to
+    move = input("Please enter one of these directions:\n 1- " +
+                 valid_moves_str + "\n 2- take/drop item_name - to take or drop an item. \n 3- Enter q to quit.\n")
+    action = move.split()
+    if len(action) == 1:
+        move = action[0]
+        if move == 'n':
+            if player1.current_position.n_to:
+                player1.current_position = player1.current_position.n_to
+            else:
+                print(error_message)
+        elif move == 's':
+            if player1.current_position.s_to:
+                player1.current_position = player1.current_position.s_to
+            else:
+                print(error_message)
+        elif move == 'e':
+            if player1.current_position.e_to:
+                player1.current_position = player1.current_position.e_to
+            else:
+                print(error_message)
+        elif move == 'w':
+            if player1.current_position.w_to:
+                player1.current_position = player1.current_position.w_to
+            else:
+                print(error_message)
+        elif move == 'q':
+            print("--------- Thank you for playing! ---------")
+            break
         else:
-            print(error_message)
-    elif move == 's':
-        if player1.current_position.s_to:
-            player1.current_position = player1.current_position.s_to
+            print("xxxxxxx Please enter one of the valid options, or q to quit xxxxxxx")
+        print(player1)
+        print(player1.current_position)
+        items = player1.current_position.get_items()
+        if items:
+            print(
+                f"The items available in {player1.current_position.name} are: {items}\n")
         else:
-            print(error_message)
-    elif move == 'e':
-        if player1.current_position.e_to:
-            player1.current_position = player1.current_position.e_to
+            print("There are no items in this room.\n")
+    elif len(action) == 2:
+        verb = action[0]
+        item = action[1]
+        if verb != "take" and verb != "drop":
+            print(
+                "xxxxxxx Please enter one of the valid options (take or drop), or q to quit xxxxxxx")
+        elif verb == "take":
+            item = player1.current_position.get_item(action[1])
+            if item:
+                player1.pick_item(item)
+                player1.current_position.remove_item(item)
+                print(f"{player1.name} added {item.name} to their inventory.")
+            else:
+                print("Sorry, this item is not in the room.")
         else:
-            print(error_message)
-    elif move == 'w':
-        if player1.current_position.w_to:
-            player1.current_position = player1.current_position.w_to
-        else:
-            print(error_message)
-    elif move == 'q':
-        print("--------- Thank you for playing! ---------")
-        break
-    else:
-        print("xxxxxxx Please enter one of the valid options, or q to quit xxxxxxx")
-    print(player1)
-    print(player1.current_position)
-    items = player1.current_position.get_items()
-    if items:
-        print(
-            f"The items available in {player1.current_position.name} are: {items}\n")
-    else:
-        print("There are no items in this room.\n")
+            item = player1.get_item(action[1])
+            if item:
+                player1.drop_item(item)
+                player1.current_position.add_item(item)
+                print(f"{player1.name} removed {item.name} from their inventory.")
+            else:
+                print("Sorry, this item is not in the inventory.")

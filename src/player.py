@@ -11,8 +11,14 @@ class Player:
     def __str__(self):
         return f"******* {self.name} is currently in room {self.current_position.name} *******"
 
-    def pick_item(item):
+    def pick_item(self, item):
         self.inventory.append(item)
 
-    def drop_item(item):
+    def drop_item(self, item):
         self.inventory.remove(item)
+
+    def get_item(self, item_name):
+        for item in self.inventory:
+            if item.name == item_name:
+                return item
+        return None

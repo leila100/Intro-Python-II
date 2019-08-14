@@ -24,5 +24,17 @@ class Room:
     def get_items(self):
         items = ""
         for item in self.items:
-            items += item.name + " "
+            items += "* " + item.name + " * "
         return items
+
+    def add_item(self, item):
+        self.items.append(item)
+
+    def remove_item(self, item):
+        self.items.remove(item)
+
+    def get_item(self, item_name):
+        for item in self.items:
+            if item.name == item_name:
+                return item
+        return None
