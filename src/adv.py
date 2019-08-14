@@ -52,29 +52,16 @@ room["treasure"].items.append(sword)
 #
 
 
-def getValidMoves(room):
-    valid_moves = []
-    if room.n_to:
-        valid_moves.append('[n - to move North]')
-    if room.s_to:
-        valid_moves.append('[s - to move South]')
-    if room.e_to:
-        valid_moves.append('[e - to move East]')
-    if room.w_to:
-        valid_moves.append('[w - to move West]')
-    return valid_moves
-
-
 # Make a new player object that is currently in the 'outside' room.
 player1 = Player("player1", room['outside'])
-print(player1)
-print(player1.current_position)
-items = player1.current_position.get_items()
-if items:
-    print(
-        f"The items available in {player1.current_position.name} are: " + items + '\n')
-else:
-    print("There are no items in this room.\n")
+
+# print(player1)
+# items = player1.current_position.get_items()
+# if items:
+#     print(
+#         f"The items available in {player1.current_position.name} are: " + items + '\n')
+# else:
+#     print("There are no items in this room.\n")
 
 # Write a loop that:
 #
@@ -86,50 +73,27 @@ else:
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-error_message = 'xxxxxxx You can not go that way. Please enter a valid move. xxxxxxx'
+
+valid_directions = ('n', 's', 'e', 'w')
+print(player1)
+print(player1.current_position)
+player1.current_position.get_items()
 while True:
-    valid_moves = getValidMoves(player1.current_position)
-    valid_moves_str = ""
-    for move in valid_moves:
-        valid_moves_str += move + " "
-    move = input("Please enter one of these directions:\n 1- " +
-                 valid_moves_str + "\n 2- take/drop item_name - to take or drop an item. \n 3- Enter q to quit.\n")
-    action = move.split()
+    current_position = player1.current_position
+    moves = current_position.get_moves()
+    moves = " ".join(moves)
+    cmd = input("\nPlease enter one of these directions:\n 1- " +
+                moves + "\n 2- take/drop item_name - to take or drop an item. \n 3- Enter q to quit.\n ->  ")
+    action = cmd.split()
     if len(action) == 1:
-        move = action[0]
-        if move == 'n':
-            if player1.current_position.n_to:
-                player1.current_position = player1.current_position.n_to
-            else:
-                print(error_message)
-        elif move == 's':
-            if player1.current_position.s_to:
-                player1.current_position = player1.current_position.s_to
-            else:
-                print(error_message)
-        elif move == 'e':
-            if player1.current_position.e_to:
-                player1.current_position = player1.current_position.e_to
-            else:
-                print(error_message)
-        elif move == 'w':
-            if player1.current_position.w_to:
-                player1.current_position = player1.current_position.w_to
-            else:
-                print(error_message)
-        elif move == 'q':
+        if action[0] in valid_directions:
+            player1.move(action[0])
+        elif action[0] == 'q':
             print("--------- Thank you for playing! ---------")
             break
         else:
-            print("xxxxxxx Please enter one of the valid options, or q to quit xxxxxxx")
-        print(player1)
-        print(player1.current_position)
-        items = player1.current_position.get_items()
-        if items:
-            print(
-                f"The items available in {player1.current_position.name} are: {items}\n")
-        else:
-            print("There are no items in this room.\n")
+            print("xxxx Invalid entry xxxx")
+
     elif len(action) == 2:
         verb = action[0]
         item = action[1]

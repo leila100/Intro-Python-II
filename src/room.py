@@ -16,16 +16,32 @@ class Room:
     def __str__(self):
         wrapper = textwrap.TextWrapper(width=50)
         word_list = wrapper.wrap(text=self.description)
-        description = ""
+        description = f"  "
         for line in word_list:
             description += line + '\n'
         return description
+
+    def get_moves(self):
+        valid_moves = []
+        if self.n_to:
+            valid_moves.append('[n - to move North]')
+        if self.s_to:
+            valid_moves.append('[s - to move South]')
+        if self.e_to:
+            valid_moves.append('[e - to move East]')
+        if self.w_to:
+            valid_moves.append('[w - to move West]')
+        return valid_moves
 
     def get_items(self):
         items = ""
         for item in self.items:
             items += "* " + item.name + " * "
-        return items
+        if items:
+            print(
+                f"The items available in {self.name} are: {items}\n")
+        else:
+            print(f"There are no items in the room {self.name}.\n")
 
     def add_item(self, item):
         self.items.append(item)

@@ -3,13 +3,24 @@
 
 
 class Player:
-    def __init__(self, name, current_position):
+    def __init__(self, name, initial_position):
         self.name = name
-        self.current_position = current_position
+        self.current_position = initial_position
         self.inventory = []
 
     def __str__(self):
-        return f"******* {self.name} is currently in room {self.current_position.name} *******"
+        return f"\n******* {self.name} is currently in room {self.current_position.name} *******\n"
+
+    def move(self, position):
+        if getattr(self.current_position, f'{position}_to'):
+            self.current_position = getattr(
+                self.current_position, f'{position}_to')
+            print(self)
+            print(self.current_position)
+            self.current_position.get_items()
+        else:
+            print(
+                '\nxxxxxxx You can not go that way. Please enter a valid move. xxxxxxx\n')
 
     def pick_item(self, item):
         self.inventory.append(item)
