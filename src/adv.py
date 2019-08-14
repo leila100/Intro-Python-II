@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -34,6 +35,18 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# create items
+sword = Item("sword", "A mighty silver night sword!")
+rock = Item("rock", "Just a regular rock.")
+key = Item("key", "A regular key. What door or chest will it open?")
+chest = Item("chest", "Treasure chest. Do you have the key to open it?")
+
+# Add items to room
+room["treasure"].items.append(chest)
+room["overlook"].items.append(key)
+room["outside"].items.append(rock)
+room["treasure"].items.append(sword)
+
 #
 # Main
 #
@@ -56,6 +69,12 @@ def getValidMoves(room):
 player1 = Player("player1", room['outside'])
 print(player1)
 print(player1.current_position)
+items = player1.current_position.get_items()
+if items:
+    print(
+        f"The items available in {player1.current_position.name} are: " + items + '\n')
+else:
+    print("There are no items in this room.\n")
 
 # Write a loop that:
 #
@@ -102,3 +121,9 @@ while True:
         print("xxxxxxx Please enter one of the valid options, or q to quit xxxxxxx")
     print(player1)
     print(player1.current_position)
+    items = player1.current_position.get_items()
+    if items:
+        print(
+            f"The items available in {player1.current_position.name} are: {items}\n")
+    else:
+        print("There are no items in this room.\n")
