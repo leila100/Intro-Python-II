@@ -93,26 +93,11 @@ while True:
             break
         else:
             print("xxxx Invalid entry xxxx")
-
     elif len(action) == 2:
         verb = action[0]
         item = action[1]
         if verb != "take" and verb != "drop":
             print(
                 "xxxxxxx Please enter one of the valid options (take or drop), or q to quit xxxxxxx")
-        elif verb == "take":
-            item = player1.current_position.get_item(action[1])
-            if item:
-                player1.pick_item(item)
-                player1.current_position.remove_item(item)
-                print(f"{player1.name} added {item.name} to their inventory.")
-            else:
-                print("Sorry, this item is not in the room.")
         else:
-            item = player1.get_item(action[1])
-            if item:
-                player1.drop_item(item)
-                player1.current_position.add_item(item)
-                print(f"{player1.name} removed {item.name} from their inventory.")
-            else:
-                print("Sorry, this item is not in the inventory.")
+            player1.action(verb, item)

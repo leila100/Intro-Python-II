@@ -33,3 +33,35 @@ class Player:
             if item.name == item_name:
                 return item
         return None
+
+    def action(self, verb, item):
+        if verb == "take":
+            # Check if room contains the item
+            take_item = self.current_position.get_item(item)
+            if take_item:
+                # If item exists i the room
+                # Add item to inventory
+                self.pick_item(take_item)
+                # remove item from room
+                self.current_position.remove_item(take_item)
+                print(f"\n{self.name} added {take_item.name} to their inventory.")
+            else:
+                # if item is not in the room
+                print("\nSorry, this item is not in the room.")
+        elif verb == "drop":
+            # Check that the player has the item in the inventory
+            drop_item = self.get_item(item)
+            if drop_item:
+                # if item is in inventory
+                # Remove item from inventory
+                self.drop_item(drop_item)
+                # Add item to room
+                self.current_position.add_item(drop_item)
+                print(
+                    f"\n{self.name} removed {drop_item.name} from their inventory.")
+            else:
+                # if item not in inventory
+                print("\nSorry, this item is not in the inventory.")
+        else:
+            print(
+                "xxxxxxx Please enter one of the valid options (take or drop) xxxxxxx")
