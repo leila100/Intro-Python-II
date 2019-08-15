@@ -24,9 +24,11 @@ class Player:
 
     def pick_item(self, item):
         self.inventory.append(item)
+        item.on_take()
 
     def drop_item(self, item):
         self.inventory.remove(item)
+        item.on_drop()
 
     def get_item(self, item_name):
         for item in self.inventory:
