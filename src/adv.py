@@ -91,6 +91,8 @@ while True:
         elif action[0] == 'q':
             print("--------- Thank you for playing! ---------")
             break
+        elif action[0] == 'i' or action[0] == 'inventory':
+            player1.get_inventory()
         else:
             print("xxxx Invalid entry xxxx")
     elif len(action) == 2:

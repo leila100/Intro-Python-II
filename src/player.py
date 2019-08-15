@@ -67,3 +67,11 @@ class Player:
         else:
             print(
                 "xxxxxxx Please enter one of the valid options (take or drop) xxxxxxx")
+
+    def get_inventory(self):
+        items = [item.name for item in self.inventory]
+        if len(items) > 0:
+            items_str = " ".join(items)
+            print(f"\n{self.name}'s inventory: {items_str}")
+        else:
+            print(f"\n{self.name} has no items in the inventory.")
