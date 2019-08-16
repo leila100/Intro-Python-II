@@ -1,4 +1,7 @@
 from room import Room
+from player import Player
+from items.item import Item
+from items.treasure_chest import Treasure_chest
 
 # Declare all the rooms
 
@@ -33,11 +36,39 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# create items
+sword = Item("sword", "A mighty silver night sword!", 10)
+ruby = Item("Ruby", "A beautiful gem.", 100)
+diamond = Item("diamond", "A flawless gem.", 200)
+rock = Item("rock", "Just a regular rock.")
+key = Item("key", "A regular key. What door or chest will it open?")
+chest = Treasure_chest(
+    "chest", "Treasure chest. Do you have the key to open it?")
+chest.add_item(ruby)
+chest.add_item(diamond)
+# print(chest)
+
+# Add items to room
+room["treasure"].items.append(chest)
+room["overlook"].items.append(key)
+room["outside"].items.append(rock)
+room["treasure"].items.append(sword)
+
 #
 # Main
 #
 
+
 # Make a new player object that is currently in the 'outside' room.
+player1 = Player("player1", room['outside'])
+
+# print(player1)
+# items = player1.current_position.get_items()
+# if items:
+#     print(
+#         f"The items available in {player1.current_position.name} are: " + items + '\n')
+# else:
+#     print("There are no items in this room.\n")
 
 # Write a loop that:
 #
@@ -49,3 +80,34 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+valid_directions = ('n', 's', 'e', 'w')
+print(player1)
+print(player1.current_position)
+player1.current_position.get_items()
+while True:
+    current_position = player1.current_position
+    moves = current_position.get_moves()
+    moves = " ".join(moves)
+    cmd = input("\nPlease enter one of these directions:\n 1- " +
+                moves + "\n 2- take/drop item_name - to take or drop an item. \n 3- Enter q to quit.\n ->  ")
+
+    action = cmd.strip().lower().split()
+    if len(action) == 1:
+        if action[0] in valid_directions:
+            player1.move(action[0])
+        elif action[0] == 'q':
+            print("--------- Thank you for playing! ---------")
+            break
+        elif action[0] == 'i' or action[0] == 'inventory':
+            player1.get_inventory()
+        else:
+            print("xxxx Invalid entry xxxx")
+    elif len(action) == 2:
+        verb = action[0]
+        item = action[1]
+        if verb != "take" and verb != "drop":
+            print(
+                "xxxxxxx Please enter one of the valid options (take or drop), or q to quit xxxxxxx")
+        else:
+            player1.action(verb, item)
