@@ -34,12 +34,11 @@ class Room:
         return valid_moves
 
     def get_items(self):
-        items = ""
-        for item in self.items:
-            items += "* " + item.name + " * "
-        if items:
+        if self.items:
             print(
-                f"The items available in {self.name} are: {items}\n")
+                f"The items available in {self.name} are: \n")
+            for item in self.items:
+                print(item)
         else:
             print(f"There are no items in the room {self.name}.\n")
 

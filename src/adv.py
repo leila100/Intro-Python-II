@@ -1,6 +1,7 @@
 from room import Room
 from player import Player
-from item import Item
+from items.item import Item
+from items.treasure_chest import Treasure_chest
 
 # Declare all the rooms
 
@@ -36,10 +37,16 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 # create items
-sword = Item("sword", "A mighty silver night sword!")
+sword = Item("sword", "A mighty silver night sword!", 10)
+ruby = Item("Ruby", "A beautiful gem.", 100)
+diamond = Item("diamond", "A flawless gem.", 200)
 rock = Item("rock", "Just a regular rock.")
 key = Item("key", "A regular key. What door or chest will it open?")
-chest = Item("chest", "Treasure chest. Do you have the key to open it?")
+chest = Treasure_chest(
+    "chest", "Treasure chest. Do you have the key to open it?")
+chest.add_item(ruby)
+chest.add_item(diamond)
+# print(chest)
 
 # Add items to room
 room["treasure"].items.append(chest)
@@ -84,7 +91,8 @@ while True:
     moves = " ".join(moves)
     cmd = input("\nPlease enter one of these directions:\n 1- " +
                 moves + "\n 2- take/drop item_name - to take or drop an item. \n 3- Enter q to quit.\n ->  ")
-    action = cmd.split()
+
+    action = cmd.strip().lower().split()
     if len(action) == 1:
         if action[0] in valid_directions:
             player1.move(action[0])
